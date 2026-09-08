@@ -38,7 +38,7 @@ SERVICES = [
      "Early starts and late landings covered. Group transfers to and from Dublin Airport and the ferry ports.",
      "plane"),
     ("golf-trips", "Golf trips",
-     "Clubs, societies and away days driven door to door, with room for the bags and the banter.",
+     "Clubs, societies and away days driven door to door, with space for the clubs and bags.",
      "flag"),
     ("weddings", "Weddings",
      "Guest shuttles between the church, the venue and the hotel so nobody has to worry about lifts home.",
@@ -97,15 +97,15 @@ def photo(name, alt, cls="ph", loading="lazy"):
 
 FLEET = [
     ("coach-setra-side.jpg", "Full-size touring coach",
-     "Our largest vehicle, for big groups, long days and away trips. Reclining seats, seat belts throughout and plenty of luggage space underneath."),
+     "Our largest vehicle, for big groups, long days and away trips. Reclining seats, seat belts throughout and luggage space underneath."),
     ("midi-coach.jpg", "Midi-coach",
-     "The right size for a club, a society or a school group that does not need a full coach. Comfortable on the motorway and easier around town."),
+     "For a club, a society or a school group that does not need a full coach."),
     ("transit-silver.jpg", "Minibuses",
-     "Ford Transit minibuses for smaller groups, local runs, airport transfers and school work. Quick to load and easy to park at the venue."),
+     "Ford Transit minibuses for smaller groups, local runs, airport transfers and school work."),
     ("sprinter.jpg", "Mercedes Sprinter",
      "A comfortable option for smaller private groups, corporate transfers and nights out."),
     ("trailer.jpg", "Luggage trailer",
-     "An enclosed trailer for golf trips, airport groups and weekends away, so bags and clubs travel with you and not on your lap."),
+     "An enclosed trailer for golf trips, airport groups and weekends away, so bags and clubs travel with the group."),
 ]
 
 NAV = [("/", "Home"), ("/services/", "Services"), ("/golf-trips/", "Golf trips"),
@@ -246,9 +246,9 @@ def page(path, title, desc, body, extra_ld="", nav_path=None):
 # ------------------------------------------------------------------ pieces
 def trustband():
     items = [("shield", "Fully Garda vetted drivers"),
-             ("clock", "Punctual, %s years on the road" % YEARS),
+             ("clock", "Over %s years in business" % YEARS),
              ("map", "All of Leinster covered"),
-             ("heart", "Family-run, not a call centre")]
+             ("heart", "Family-run business")]
     return ('<div class="trustband"><div class="wrap">%s</div></div>'
             % "".join("<span>%s%s</span>" % (icon(i), t) for i, t in items))
 
@@ -265,7 +265,7 @@ FAQS = [
  ("What areas do you cover?",
   "We are based in %s, %s and cover all of Leinster as standard, including Dublin, Kildare, Carlow, Wexford, Kilkenny and the midlands. We travel further afield too when we have availability on your dates, so it is always worth asking." % (TOWN, COUNTY)),
  ("How do I book?",
-  "There is no online booking system, and that is deliberate. Every job is quoted properly rather than by a form. Email %s or use the enquiry form with your date, group size, pick-up point and destination, and we will confirm availability and price, usually the same day." % EMAIL),
+  "We do not take bookings online. Email %s or use the enquiry form with your date, group size, pick-up point and destination, and we will confirm availability and price, usually the same day." % EMAIL),
  ("What size groups can you take?",
   "Everything from a small private group to a full coach load. We run a full-size touring coach, a midi-coach, Ford Transit minibuses and a Mercedes Sprinter, with %s drivers, so we can also put more than one vehicle on a larger event. Tell us your numbers and we will match the right vehicle." % DRIVERS),
  ("Are your drivers vetted?",
@@ -279,9 +279,9 @@ FAQS = [
  ("Do you run golf trips?",
   "Yes, and it is a growing part of the business. We look after societies, clubs and groups travelling to courses around the country, with space for clubs and bags and a driver for the day."),
  ("How far in advance should I book?",
-  "The sooner the better for weekends, bank holidays and big event dates, which go early. Midweek work can often be arranged at shorter notice. Ask us either way."),
+  "As early as you can for weekends, bank holidays and big event dates. Midweek work can often be arranged at shorter notice."),
  ("Do you carry stag and hen parties?",
-  "We do, provided the group is respectful of the vehicle and the driver. Tell us the plan and the numbers and we will quote it."),
+  "We do. Tell us the plan and the numbers and we will quote it."),
 ]
 
 def faq_block(items):
@@ -313,7 +313,7 @@ def build_home():
   <div class="hero-bg"><img src="/assets/img/hero-fleet.jpg" alt="Two of the RSC Buses fleet, a Setra coach and a midi-coach, parked side by side" fetchpriority="high" decoding="async"></div>
   <div class="wrap"><div class="hero-inner"><div class="hero-copy">
     <h1>Bus and coach hire in <em>Wicklow</em>, across all of Leinster</h1>
-    <p>%(legal)s is a family-run transport business based in %(town)s, %(county)s. School runs, airport transfers, golf trips, weddings and group travel, driven by people you can actually get hold of.</p>
+    <p>%(legal)s is a family-run transport business based in %(town)s, %(county)s. School runs, airport transfers, golf trips, weddings and private group travel across Leinster.</p>
     <div class="hero-actions">
       <a class="btn btn-amber" href="/contact/">Get a quote</a>
       <a class="btn btn-ghost" href="/services/">See our services</a>
@@ -326,8 +326,8 @@ def build_home():
   <div class="wrap">
     <div class="sec-head center">
       <div class="eyebrow">What we do</div>
-      <h2>Group travel, sorted properly</h2>
-      <p class="lede" style="margin:10px auto 0">From the daily school run to a full weekend away, we carry groups of every size across Leinster and beyond.</p>
+      <h2>Bus and coach hire for groups of every size</h2>
+      <p class="lede" style="margin:10px auto 0">Daily school runs, one-off transfers and multi-day trips, across Leinster and further afield.</p>
     </div>
     %(services)s
   </div>
@@ -337,13 +337,13 @@ def build_home():
   <div class="wrap split">
     <div>
       <div class="eyebrow">Why %(site)s</div>
-      <h2>A local operator, not a booking platform</h2>
-      <p class="lede" style="margin-top:12px">Ronan Byrne set the business up after years driving for other local transport companies, and it is still run day to day by Ronan and his wife Sorica. When you ring or email, you are talking to the people who own the buses.</p>
+      <h2>A family business based in Aughrim</h2>
+      <p class="lede" style="margin-top:12px">Ronan Byrne set the business up after years driving for other local transport companies. It is run day to day by Ronan and his wife Sorica: Ronan runs the operation and Sorica looks after the office and enquiries.</p>
       <ul>
         <li>Over %(years)s years serving Wicklow and the surrounding counties</li>
         <li>%(drivers)s drivers, all fully Garda vetted</li>
         <li>Vehicles checked regularly with all documentation up to date</li>
-        <li>Every job quoted individually, no rigid online booking system</li>
+        <li>Every job quoted individually</li>
         <li>Repeat customers who come back year after year</li>
       </ul>
       <div style="margin-top:26px"><a class="btn btn-navy" href="/about/">More about us</a></div>
@@ -367,8 +367,8 @@ def build_home():
   <div class="wrap">
     <div class="sec-head center">
       <div class="eyebrow">Our fleet</div>
-      <h2>The right size bus for the job</h2>
-      <p class="lede" style="margin:10px auto 0">From a full-size coach to a minibus, with a luggage trailer for the trips where the bags matter. Tell us the numbers and we will match the vehicle.</p>
+      <h2>Our vehicles</h2>
+      <p class="lede" style="margin:10px auto 0">A full-size coach, a midi-coach, minibuses and a luggage trailer. Tell us your numbers and we will match the vehicle.</p>
     </div>
     %(fleet)s
   </div>
@@ -378,9 +378,9 @@ def build_home():
   <div class="wrap split">
     <div>%(photo2)s</div>
     <div>
-      <div class="eyebrow">Growing fast</div>
+      <div class="eyebrow">Golf trips</div>
       <h2>Golf trips and society away days</h2>
-      <p class="lede" style="margin-top:12px">Golf work is becoming a bigger part of what we do. We take societies, clubs and groups to courses around the country, with room for the clubs and a driver on hand for the day so nobody has to think about who is driving home.</p>
+      <p class="lede" style="margin-top:12px">We take societies, clubs and groups to courses around the country, with space for the clubs and a driver available for the day.</p>
       <div style="margin-top:24px"><a class="btn btn-amber" href="/golf-trips/">Plan a golf trip</a></div>
     </div>
   </div>
@@ -484,7 +484,7 @@ def build_services():
     body = """<section class="phead"><div class="wrap">
     <div class="crumb"><a href="/">Home</a> / Services</div>
     <h1>Our services</h1>
-    <p>Whatever the group and whatever the occasion, we will get everyone there together and on time. Based in %s, covering all of Leinster.</p>
+    <p>Bus and coach hire for schools, clubs, businesses and private groups. Based in %s, covering all of Leinster.</p>
   </div></section>%s
 %s""" % (TOWN, trustband(), "".join(blocks)) + cta()
     page("services/index.html",
@@ -496,14 +496,14 @@ def build_golf():
     body = """<section class="phead"><div class="wrap">
     <div class="crumb"><a href="/">Home</a> / Golf trips</div>
     <h1>Golf trips and society outings</h1>
-    <p>Clubs, societies and corporate groups driven door to door, anywhere in Ireland. Room for the clubs, a driver for the day and nobody drawing the short straw.</p>
+    <p>Clubs, societies and corporate groups driven door to door, anywhere in Ireland. Space for the clubs and a driver for the day.</p>
   </div></section>%(trust)s
 
 <section class="sec"><div class="wrap split">
   <div>
-    <div class="eyebrow">Why travel together</div>
-    <h2>The day starts when you get on the bus</h2>
-    <p class="lede" style="margin-top:12px">Golf work is a growing part of what we do, and it is easy to see why. One pick-up point, everyone arrives together, the bags travel with you, and there is no argument about who is staying off the pints.</p>
+    <div class="eyebrow">Golf trips</div>
+    <h2>Travelling as a group</h2>
+    <p class="lede" style="margin-top:12px">Golf work is a growing part of what we do. One pick-up point, everyone arrives together and the bags travel with the group.</p>
     <ul>
       <li>Society outings, club away days and corporate golf</li>
       <li>Courses anywhere in Ireland, single day or overnight</li>
@@ -516,11 +516,11 @@ def build_golf():
 </div></section>
 
 <section class="sec tint"><div class="wrap">
-  <div class="sec-head center"><div class="eyebrow">How it works</div><h2>Three steps and it is booked</h2></div>
+  <div class="sec-head center"><div class="eyebrow">Booking</div><h2>How it works</h2></div>
   <div class="grid g3">
     <div class="card"><div class="ico">%(i1)s</div><h3>1. Tell us the plan</h3><p>Date, course, group size and where everyone is coming from. A rough plan is enough to start.</p></div>
     <div class="card"><div class="ico">%(i2)s</div><h3>2. We price it</h3><p>We check availability and come back with a price, usually the same day. No deposit taken until you are happy.</p></div>
-    <div class="card"><div class="ico">%(i3)s</div><h3>3. We do the driving</h3><p>We confirm timings the week before and collect on the day. You just show up with the clubs.</p></div>
+    <div class="card"><div class="ico">%(i3)s</div><h3>3. We do the driving</h3><p>We confirm timings the week before and collect on the day.</p></div>
   </div>
 </div></section>
 
@@ -529,17 +529,17 @@ def build_golf():
   <div>
     <div class="eyebrow">Where we go</div>
     <h2>Wicklow courses and the rest of the country</h2>
-    <p class="lede" style="margin-top:12px">We are on the doorstep of some of the best golf in the country, and we are just as happy taking a group the length of Ireland for a weekend. Tell us the course and we will work out the timings.</p>
+    <p class="lede" style="margin-top:12px">Wicklow and the surrounding counties have plenty of courses close to us, and we regularly take groups further afield for a day or a weekend. Tell us the course and we will work out the timings.</p>
     <div class="pills">%(pills)s</div>
   </div>
 </div></section>
 %(cta)s""" % {"trust": trustband(),
-              "p1": photo("trailer.jpg", "Enclosed luggage trailer behind the minibus, room for every set of clubs"),
+              "p1": photo("transit-trailer.jpg", "Minibus with the enclosed luggage trailer used for golf trips"),
               "p2": photo("interior.jpg", "Coach interior with reclining seats for the journey home"),
               "i1": icon("flag"), "i2": icon("mail"), "i3": icon("bus"),
               "pills": "".join("<span>%s</span>" % a for a in AREAS),
               "cta": cta("Planning a society outing?",
-                         "Send us the date and the numbers and we will price it for you, usually the same day.")}
+                         "Send us the date and the numbers and we will come back with a price, usually the same day.")}
     page("golf-trips/index.html",
          "Golf Trip Bus Hire Ireland | Society &amp; Club Outings | %s" % SITE,
          "Bus and coach hire for golf societies, clubs and corporate golf days. Courses anywhere in Ireland, club and luggage space, driver for the day. Based in %s, %s." % (TOWN, COUNTY),
@@ -555,17 +555,17 @@ def build_about():
 <section class="sec"><div class="wrap split">
   <div class="prose">
     <div class="eyebrow">Our story</div>
-    <h2 style="margin-top:0">Built on the road, not in an office</h2>
+    <h2 style="margin-top:0">How the business started</h2>
     <p>The business was founded by Ronan Byrne after years of experience driving for local transport companies. It was built on a passion for reliable service, customer care and community connections.</p>
     <p>With extensive knowledge of the local area and a commitment to providing safe and dependable transport, Ronan decided to establish his own company to offer a more personal and professional service.</p>
     <p>Today the business is proudly run by Ronan alongside his wife Sorica, making it a true family operation dedicated to delivering friendly, trustworthy and flexible transport solutions.</p>
-    <p>You will still see the Ronan Byrne name on the side of our buses. RSC Buses is the same family, the same drivers and the same vehicles, just with a name that is easier to find.</p>
+    <p>The buses still carry the Ronan Byrne name. RSC Buses is the same business, drivers and vehicles under a new name.</p>
   </div>
   <div>%(p1)s</div>
 </div></section>
 
 <section class="sec tint"><div class="wrap">
-  <div class="sec-head center"><div class="eyebrow">What you can count on</div><h2>The bits that actually matter</h2></div>
+  <div class="sec-head center"><div class="eyebrow">Standards</div><h2>What you can expect</h2></div>
   <div class="grid g3">
     <div class="card"><div class="ico">%(i1)s</div><h3>Garda vetted drivers</h3><p>All %(drivers)s of our drivers, Ronan included, are fully Garda vetted with documentation kept up to date.</p></div>
     <div class="card"><div class="ico">%(i2)s</div><h3>Well kept vehicles</h3><p>Our buses are checked and serviced regularly. Paperwork is available for schools, clubs and companies who need it.</p></div>
@@ -577,8 +577,8 @@ def build_about():
   <div>%(p2)s</div>
   <div>
     <div class="eyebrow">The team</div>
-    <h2>Seven drivers, one family business</h2>
-    <p class="lede" style="margin-top:12px">Ronan drives and runs the operation. Sorica looks after the office, the quotes and the bookings, so when you email you get a straight answer from someone who knows what is on the road that week.</p>
+    <h2>The team</h2>
+    <p class="lede" style="margin-top:12px">Ronan drives and runs the operation. Sorica looks after the office, the quotes and the bookings. There are %(drivers)s drivers in total, all fully Garda vetted.</p>
     <p class="lede" style="margin-top:14px">Whether it is a local journey or a special occasion, we are committed to getting passengers to their destination safely, comfortably and on time.</p>
     <div style="margin-top:24px"><a class="btn btn-navy" href="/contact/">Talk to us</a></div>
   </div>
@@ -667,7 +667,7 @@ def build_contact():
     <div class="row"><label for="f-dest">Destination</label><input id="f-dest" name="destination" type="text"></div>
     <div class="row"><label for="f-msg">Anything else we should know</label><textarea id="f-msg" name="message" placeholder="Timings, return journey, extra stops, luggage, anything at all."></textarea></div>
     <button class="btn btn-amber" type="submit" style="width:100%%">Send enquiry</button>
-    <p class="formnote">This opens your email app with the details filled in, addressed to %(email)s. We do not take online bookings, every job is quoted properly.</p>
+    <p class="formnote">This opens your email app with the details filled in, addressed to %(email)s. We do not take bookings online. Every job is quoted individually.</p>
   </form>
 
   <div class="contact-cards">
