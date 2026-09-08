@@ -1,12 +1,32 @@
 /* RSC Buses - shared site behaviour */
 (function () {
-  // mobile nav
+  // Mobile nav. The menu markup sits inside the sticky <header>, so it
+  // opens directly under the bar no matter how far the page is scrolled.
   var burger = document.querySelector('.burger');
   var menu = document.querySelector('.mobile-menu');
   if (burger && menu) {
-    burger.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
+    var setOpen = function (open) {
+      menu.classList.toggle('open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    burger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(!menu.classList.contains('open'));
+    });
+    // Close after tapping a link, on Escape, on a tap outside, and if the
+    // window is widened back to the desktop nav.
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { setOpen(false); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setOpen(false); }
+    });
+    document.addEventListener('click', function (e) {
+      if (menu.classList.contains('open') && !menu.contains(e.target) &&
+          !burger.contains(e.target)) { setOpen(false); }
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 1000) { setOpen(false); }
     });
   }
 

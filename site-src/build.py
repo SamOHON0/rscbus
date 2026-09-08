@@ -138,10 +138,10 @@ def header(path):
     <a href="/" class="brand" aria-label="%s home">%s</a>
     <nav class="navlinks">%s</nav>
     <div class="nav-cta">%s</div>
-    <button class="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="burger" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
-</header>
-<div class="mobile-menu">%s</div>""" % (topbar(), SITE, LOGO_LIGHT, links,
+  <div class="mobile-menu" id="mobile-menu">%s</div>
+</header>""" % (topbar(), SITE, LOGO_LIGHT, links,
                                         phone_link("Get a quote", "btn btn-navy"), mob)
 
 def cta(title="Need a bus for your group?",
