@@ -18,24 +18,46 @@ That rewrites `index.html`, `services/`, `golf-trips/`, `areas/`, `about/`,
 Assets (`assets/style.css`, `assets/site.js`, `assets/favicon.svg`) are NOT
 generated. Edit those directly.
 
-## Outstanding items before this goes to the client
+## Outstanding items
 
-1. **Phone number is missing.** Sorica's email never gave one. Set `PHONE` and
-   `PHONE_E164` at the top of `build.py` and every phone CTA (top bar, nav
-   button, contact card, schema `telephone`) switches on automatically. Until
-   then the site routes everything to `office@rscbuses.ie`.
-2. **Photos.** Every image is a dashed placeholder box (`.ph` in style.css).
-   Sorica sent `Bus pictures.zip` on 3 Sep — drop the extracted images into
-   `assets/img/` and replace each `ph(...)` call in `build.py` with a real
-   `<img>`. Placeholders are labelled with what shot belongs there.
-3. **Logo.** Sorica sent `New logo.pdf` on 3 Sep. Current header/footer mark is
-   a temporary SVG wordmark defined as `LOGO` in `build.py`. Swap it for the
-   real mark and re-check the `--navy` / `--amber` tokens in style.css against
-   the client's actual colours — the whole palette flows from those tokens.
-4. **Driver/uniform photo.** Sorica said she will send a photo of herself and
-   Ronan once the uniforms arrive. That slot is on the About page.
-5. **Reviews/testimonials.** None supplied. There is no testimonial section on
-   the build yet — worth asking for 3 or 4 before launch.
+1. **Phone number.** Still not supplied. Set `PHONE` and `PHONE_E164` at the
+   top of `build.py` and every phone CTA (top bar, nav button, contact card,
+   schema `telephone`) switches on automatically. Until then the site routes
+   everything to `office@rscbuses.ie`.
+2. **Team photo.** Sorica will send a photo of herself and Ronan once the
+   uniforms arrive. Slot is on the About page (the one remaining `ph(...)`
+   placeholder in `build.py`). Drop the file in `assets/img/` and swap the
+   `ph(...)` for `photo(...)`.
+3. **Seat counts.** The fleet section (home page, `FLEET` in `build.py`)
+   lists vehicle types with no capacities. Ask Sorica for seat counts per
+   vehicle and add them to each card.
+4. **Reviews.** None supplied. No testimonial section on the build yet.
+5. **Golf trips.** Sorica said they are "just getting everything in order"
+   with golf work but that bookings are becoming more frequent. The golf
+   page presents it as live. Confirm with her that is fine.
+
+## Assets
+
+Client originals (6 phone photos, all portrait, plus `New logo.pdf`) live in
+`assets/raw/` and are **gitignored** (25 MB). Processed web versions are in
+`assets/img/`:
+
+- `hero-fleet.jpg` (1600w) — home hero, midi-coach + Setra coach
+- 4:3 crops at 1200w for every other slot (see `SERVICE_PHOTOS` and `FLEET`
+  in `build.py` for which goes where)
+- `logo.png` / `logo-white.png` — the full square client logo
+- `logo-bus.png` / `logo-bus-white.png` — the coach mark alone, used in the
+  header and footer lockup alongside a Libre Baskerville wordmark (the
+  square logo is too tall for a 74px header)
+- `favicon.png`, `og.jpg`
+
+The fleet visible in the photos: Setra full-size coach (09-TS-1), TURAS
+midi-coach (161-CE-1342), two Ford Transit minibuses (182-WX-1447 navy,
+161-WX-3461 silver), Mercedes Sprinter (141-D-23073) and a Debon enclosed
+luggage trailer. Every vehicle is liveried "Ronan Byrne" in script; the new
+logo is "RSC Buses". The About page acknowledges both.
+
+Brand navy from the logo is `#0f2532` (`--navy-deep` in style.css).
 
 ## Client brief (source: Sorica Byrne, office@rscbuses.ie, 3 Sep 2026)
 

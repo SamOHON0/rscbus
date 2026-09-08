@@ -3,3 +3,6 @@ Thumbs.db
 node_modules/
 .vercel
 __pycache__/
+assets/raw/*
+!assets/raw/.gitkeep
+_to_delete/

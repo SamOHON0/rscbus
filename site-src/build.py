@@ -79,20 +79,34 @@ def icon(name, cls=""):
             'stroke-linecap="round" stroke-linejoin="round" class="%s" aria-hidden="true">%s</svg>'
             % (cls, ICONS[name]))
 
-LOGO = '''<svg viewBox="0 0 250 60" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RSC Buses">
-  <rect x="2" y="12" width="52" height="30" rx="8" fill="%(bus)s"/>
-  <rect x="8" y="18" width="16" height="11" rx="3" fill="%(win)s"/>
-  <rect x="28" y="18" width="19" height="11" rx="3" fill="%(win)s"/>
-  <circle cx="15" cy="45" r="6" fill="%(wheel)s"/><circle cx="41" cy="45" r="6" fill="%(wheel)s"/>
-  <text x="66" y="31" font-family="Manrope,Inter,sans-serif" font-weight="800" font-size="25" fill="%(t1)s" letter-spacing="-0.5">RSC</text>
-  <text x="120" y="31" font-family="Manrope,Inter,sans-serif" font-weight="800" font-size="25" fill="%(t2)s" letter-spacing="-0.5">Buses</text>
-  <text x="66" y="47" font-family="Inter,sans-serif" font-weight="600" font-size="10.5" fill="%(t3)s" letter-spacing="1.1">RONAN BYRNE BUS HIRE</text>
-</svg>'''
+# The client's logo is a square lockup (coach illustration over "RSC BUSES /
+# Aughrim" in a serif). Too tall for a 74px header, so the header and footer
+# use a horizontal lockup: the coach mark from the logo as an image, with the
+# wordmark set in Libre Baskerville to match. The full square logo is at
+# assets/img/logo.png (navy) and logo-white.png for use elsewhere.
+LOGO_LIGHT = ('<img src="/assets/img/logo-bus.png" alt="" width="96" height="50">'
+              '<span class="wordmark"><b>RSC Buses</b><small>%s &middot; %s</small></span>' % (TOWN, COUNTY))
+LOGO_DARK = ('<img src="/assets/img/logo-bus-white.png" alt="" width="96" height="50">'
+             '<span class="wordmark on-dark"><b>RSC Buses</b><small>%s &middot; %s</small></span>' % (TOWN, COUNTY))
 
-LOGO_LIGHT = LOGO % {"bus": "#14314f", "win": "#e3ecf5", "wheel": "#0c2038",
-                     "t1": "#14314f", "t2": "#c07c05", "t3": "#7c8a99"}
-LOGO_DARK = LOGO % {"bus": "#f5a524", "win": "#0c2038", "wheel": "#e3ecf5",
-                    "t1": "#ffffff", "t2": "#f5a524", "t3": "#9db6cd"}
+# Photo helper. Files live in assets/img/ (processed from the client's
+# originals in assets/raw/). Portrait originals were cropped to 4:3.
+def photo(name, alt, cls="ph", loading="lazy"):
+    return ('<div class="%s has-img"><img src="/assets/img/%s" alt="%s" loading="%s" decoding="async"></div>'
+            % (cls, name, alt.replace('"', "&quot;"), loading))
+
+FLEET = [
+    ("coach-setra-side.jpg", "Full-size touring coach",
+     "Our largest vehicle, for big groups, long days and away trips. Reclining seats, seat belts throughout and plenty of luggage space underneath."),
+    ("midi-coach.jpg", "Midi-coach",
+     "The right size for a club, a society or a school group that does not need a full coach. Comfortable on the motorway and easier around town."),
+    ("transit-silver.jpg", "Minibuses",
+     "Ford Transit minibuses for smaller groups, local runs, airport transfers and school work. Quick to load and easy to park at the venue."),
+    ("sprinter.jpg", "Mercedes Sprinter",
+     "A comfortable option for smaller private groups, corporate transfers and nights out."),
+    ("trailer.jpg", "Luggage trailer",
+     "An enclosed trailer for golf trips, airport groups and weekends away, so bags and clubs travel with you and not on your lap."),
+]
 
 NAV = [("/", "Home"), ("/services/", "Services"), ("/golf-trips/", "Golf trips"),
        ("/areas/", "Areas covered"), ("/about/", "About"), ("/faqs/", "FAQs"),
@@ -171,6 +185,7 @@ BASE_LD = """{
   "@context":"https://schema.org","@type":"MotorVehicleDealership","@id":"%(d)s/#business",
   "name":"%(site)s","alternateName":"%(legal)s","url":"%(d)s/",
   "email":"%(email)s","priceRange":"$$",
+  "image":"%(d)s/assets/img/og.jpg","logo":"%(d)s/assets/img/logo.png",
   "description":"Family-run bus and coach hire based in %(town)s, %(county)s. School transport, airport transfers, golf trips, weddings, sporting events and private group travel across Leinster.",
   "address":{"@type":"PostalAddress","addressLocality":"%(town)s","addressRegion":"%(county)s","addressCountry":"IE"},
   "areaServed":[%(areas)s]
@@ -200,11 +215,14 @@ def page(path, title, desc, body, extra_ld="", nav_path=None):
 <meta property="og:description" content="%(desc)s">
 <meta property="og:url" content="%(url)s">
 <meta property="og:type" content="website">
+<meta property="og:image" content="%(d)s/assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:locale" content="en_IE">
-<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">%(ld)s</script>
 %(extra)s</head>
@@ -215,7 +233,7 @@ def page(path, title, desc, body, extra_ld="", nav_path=None):
 <script src="/assets/site.js"></script>
 </body>
 </html>
-""" % {"title": title, "desc": desc, "url": url, "ld": base_ld(),
+""" % {"title": title, "desc": desc, "url": url, "ld": base_ld(), "d": DOMAIN,
        "extra": extra_ld, "header": header(nav_path or ("/" if path == "index.html"
                                                         else "/" + path.rsplit("/", 1)[0] + "/")),
        "body": body, "footer": footer()}
@@ -226,34 +244,6 @@ def page(path, title, desc, body, extra_ld="", nav_path=None):
     print("wrote", path)
 
 # ------------------------------------------------------------------ pieces
-HERO_ART = """<svg class="hero-art" viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <defs>
-    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".97"/>
-      <stop offset="1" stop-color="#cfe0ef" stop-opacity=".95"/>
-    </linearGradient>
-    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#7fb6e2"/><stop offset="1" stop-color="#2b7bbd"/>
-    </linearGradient>
-  </defs>
-  <ellipse cx="380" cy="300" rx="330" ry="20" fill="#0a1b30" opacity=".45"/>
-  <path d="M92 96h500a52 52 0 0 1 52 52v106a14 14 0 0 1-14 14H78a14 14 0 0 1-14-14V138a42 42 0 0 1 28-42z" fill="url(#body)"/>
-  <path d="M600 112a44 44 0 0 1 40 44v22h-58v-66z" fill="url(#glass)" opacity=".95"/>
-  <g fill="url(#glass)">
-    <rect x="96" y="126" width="74" height="52" rx="9"/>
-    <rect x="182" y="126" width="74" height="52" rx="9"/>
-    <rect x="268" y="126" width="74" height="52" rx="9"/>
-    <rect x="354" y="126" width="74" height="52" rx="9"/>
-    <rect x="440" y="126" width="74" height="52" rx="9"/>
-  </g>
-  <rect x="64" y="196" width="580" height="16" fill="#f5a524"/>
-  <rect x="64" y="216" width="580" height="7" fill="#14314f" opacity=".35"/>
-  <rect x="524" y="126" width="52" height="88" rx="9" fill="#cfe0ef" opacity=".9"/>
-  <circle cx="184" cy="268" r="42" fill="#0a1b30"/><circle cx="184" cy="268" r="19" fill="#cfe0ef"/>
-  <circle cx="512" cy="268" r="42" fill="#0a1b30"/><circle cx="512" cy="268" r="19" fill="#cfe0ef"/>
-  <rect x="636" y="188" width="16" height="20" rx="6" fill="#f5a524"/>
-</svg>"""
-
 def trustband():
     items = [("shield", "Fully Garda vetted drivers"),
              ("clock", "Punctual, %s years on the road" % YEARS),
@@ -277,7 +267,7 @@ FAQS = [
  ("How do I book?",
   "There is no online booking system, and that is deliberate. Every job is quoted properly rather than by a form. Email %s or use the enquiry form with your date, group size, pick-up point and destination, and we will confirm availability and price, usually the same day." % EMAIL),
  ("What size groups can you take?",
-  "We run a fleet with %s drivers, so we can look after everything from a small private group to a full coach load, and multiple vehicles for larger events. Tell us your numbers and we will match the right vehicle." % DRIVERS),
+  "Everything from a small private group to a full coach load. We run a full-size touring coach, a midi-coach, Ford Transit minibuses and a Mercedes Sprinter, with %s drivers, so we can also put more than one vehicle on a larger event. Tell us your numbers and we will match the right vehicle." % DRIVERS),
  ("Are your drivers vetted?",
   "Yes. Every driver is fully Garda vetted, which matters most for our school work but applies right across the business. All licences and documentation are kept up to date."),
  ("Are the buses maintained and insured?",
@@ -305,13 +295,22 @@ def faq_ld(items):
     return ('<script type="application/ld+json">{"@context":"https://schema.org",'
             '"@type":"FAQPage","mainEntity":[%s]}</script>\n' % q)
 
+def fleet_grid():
+    cards = []
+    for img, name, blurb in FLEET:
+        cards.append('''<div class="fleetcard">
+      %s
+      <div class="fc-body"><h3>%s</h3><p>%s</p></div>
+    </div>''' % (photo(img, name, cls="fc-img"), name, blurb))
+    return '<div class="fleet">%s</div>' % "".join(cards)
+
 def ph(label, cls="ph"):
     return '<div class="%s"><span>%s</span></div>' % (cls, label)
 
 # ------------------------------------------------------------------ pages
 def build_home():
     body = """<section class="hero">
-  %(art)s
+  <div class="hero-bg"><img src="/assets/img/hero-fleet.jpg" alt="Two of the RSC Buses fleet, a Setra coach and a midi-coach, parked side by side" fetchpriority="high" decoding="async"></div>
   <div class="wrap"><div class="hero-inner"><div class="hero-copy">
     <h1>Bus and coach hire in <em>Wicklow</em>, across all of Leinster</h1>
     <p>%(legal)s is a family-run transport business based in %(town)s, %(county)s. School runs, airport transfers, golf trips, weddings and group travel, driven by people you can actually get hold of.</p>
@@ -364,7 +363,18 @@ def build_home():
   </div>
 </section>
 
-<section class="sec tint">
+<section class="sec tint" id="fleet">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="eyebrow">Our fleet</div>
+      <h2>The right size bus for the job</h2>
+      <p class="lede" style="margin:10px auto 0">From a full-size coach to a minibus, with a luggage trailer for the trips where the bags matter. Tell us the numbers and we will match the vehicle.</p>
+    </div>
+    %(fleet)s
+  </div>
+</section>
+
+<section class="sec">
   <div class="wrap split">
     <div>%(photo2)s</div>
     <div>
@@ -376,7 +386,7 @@ def build_home():
   </div>
 </section>
 
-<section class="sec">
+<section class="sec tint">
   <div class="wrap">
     <div class="sec-head center">
       <div class="eyebrow">Areas covered</div>
@@ -388,7 +398,7 @@ def build_home():
   </div>
 </section>
 
-<section class="sec tint">
+<section class="sec">
   <div class="wrap">
     <div class="sec-head center"><div class="eyebrow">Questions</div><h2>Common questions</h2></div>
     %(faq)s
@@ -397,10 +407,11 @@ def build_home():
 </section>
 
 %(cta)s""" % {
-    "art": HERO_ART, "trust": trustband(), "services": service_cards(8),
+    "trust": trustband(), "services": service_cards(8), "fleet": fleet_grid(),
     "site": SITE, "legal": LEGAL, "town": TOWN, "county": COUNTY,
     "years": YEARS, "drivers": DRIVERS,
-    "photo": ph("Photo: the fleet"), "photo2": ph("Photo: golf group boarding"),
+    "photo": photo("coach-setra.jpg", "The RSC Buses Setra coach, still carrying the Ronan Byrne name on the front"),
+    "photo2": photo("transit-trailer.jpg", "Navy minibus with the enclosed luggage trailer used for golf trips and airport groups"),
     "pills": "".join("<span>%s</span>" % a for a in AREAS),
     "faq": faq_block(FAQS[:5]), "cta": cta()}
     page("index.html",
@@ -443,11 +454,23 @@ SERVICE_DETAIL = {
   "Local runs of any size"],
 }
 
+SERVICE_PHOTOS = {
+    "school-transport":        ("transit-silver.jpg", "Ford Transit minibus used on school runs"),
+    "airport-transfers":       ("transit-trailer.jpg", "Minibus and luggage trailer ready for an airport group"),
+    "golf-trips":              ("fleet-coach-midi.jpg", "Midi-coach and full-size coach side by side"),
+    "weddings":                ("coach-setra.jpg", "The Setra coach used for wedding guest shuttles"),
+    "sporting-events":         ("midi-sprinter.jpg", "Midi-coach and Mercedes Sprinter"),
+    "concerts-and-nights-out": ("interior.jpg", "Inside the coach: reclining seats with belts"),
+    "stag-and-hen-parties":    ("sprinter.jpg", "Mercedes Sprinter for smaller groups"),
+    "private-group-travel":    ("coach-setra-side.jpg", "Side view of the full-size touring coach"),
+}
+
 def build_services():
     blocks = []
     for i, (slug, name, blurb, ic) in enumerate(SERVICES):
         pts = "".join("<li>%s</li>" % p for p in SERVICE_DETAIL[slug])
-        photo = ph("Photo: %s" % name.lower())
+        img, alt = SERVICE_PHOTOS[slug]
+        photo_html = photo(img, alt)
         left = """<div>
         <div class="eyebrow">Service</div>
         <h2>%s</h2>
@@ -455,7 +478,7 @@ def build_services():
         <ul>%s</ul>
         <div style="margin-top:24px"><a class="btn btn-navy" href="/contact/?service=%s">Enquire about %s</a></div>
       </div>""" % (name, blurb, pts, slug, name.lower())
-        cols = (left + "<div>%s</div>" % photo) if i % 2 == 0 else ("<div>%s</div>" % photo + left)
+        cols = (left + "<div>%s</div>" % photo_html) if i % 2 == 0 else ("<div>%s</div>" % photo_html + left)
         blocks.append('<section class="sec%s" id="%s"><div class="wrap split">%s</div></section>'
                       % (" tint" if i % 2 else "", slug, cols))
     body = """<section class="phead"><div class="wrap">
@@ -480,7 +503,7 @@ def build_golf():
   <div>
     <div class="eyebrow">Why travel together</div>
     <h2>The day starts when you get on the bus</h2>
-    <p class="lede" style="margin-top:12px">Golf work is one of the fastest growing parts of our business, and it is easy to see why. One pick-up point, everyone arrives together, the bags travel with you, and there is no argument about who is staying off the pints.</p>
+    <p class="lede" style="margin-top:12px">Golf work is a growing part of what we do, and it is easy to see why. One pick-up point, everyone arrives together, the bags travel with you, and there is no argument about who is staying off the pints.</p>
     <ul>
       <li>Society outings, club away days and corporate golf</li>
       <li>Courses anywhere in Ireland, single day or overnight</li>
@@ -510,8 +533,9 @@ def build_golf():
     <div class="pills">%(pills)s</div>
   </div>
 </div></section>
-%(cta)s""" % {"trust": trustband(), "p1": ph("Photo: group at the course"),
-              "p2": ph("Photo: coach with clubs loading"),
+%(cta)s""" % {"trust": trustband(),
+              "p1": photo("trailer.jpg", "Enclosed luggage trailer behind the minibus, room for every set of clubs"),
+              "p2": photo("interior.jpg", "Coach interior with reclining seats for the journey home"),
               "i1": icon("flag"), "i2": icon("mail"), "i3": icon("bus"),
               "pills": "".join("<span>%s</span>" % a for a in AREAS),
               "cta": cta("Planning a society outing?",
@@ -535,6 +559,7 @@ def build_about():
     <p>The business was founded by Ronan Byrne after years of experience driving for local transport companies. It was built on a passion for reliable service, customer care and community connections.</p>
     <p>With extensive knowledge of the local area and a commitment to providing safe and dependable transport, Ronan decided to establish his own company to offer a more personal and professional service.</p>
     <p>Today the business is proudly run by Ronan alongside his wife Sorica, making it a true family operation dedicated to delivering friendly, trustworthy and flexible transport solutions.</p>
+    <p>You will still see the Ronan Byrne name on the side of our buses. RSC Buses is the same family, the same drivers and the same vehicles, just with a name that is easier to find.</p>
   </div>
   <div>%(p1)s</div>
 </div></section>
@@ -560,7 +585,8 @@ def build_about():
 </div></section>
 %(cta)s""" % {"site": SITE, "legal": LEGAL, "town": TOWN, "county": COUNTY, "years": YEARS,
               "drivers": DRIVERS, "trust": trustband(),
-              "p1": ph("Photo: Ronan with the bus"), "p2": ph("Photo: Ronan and Sorica"),
+              "p1": photo("coach-setra.jpg", "The Setra coach, still carrying the Ronan Byrne name it has always had"),
+              "p2": ph("Photo of Ronan and Sorica coming soon"),
               "i1": icon("shield"), "i2": icon("bus"), "i3": icon("clock"),
               "cta": cta()}
     page("about/index.html",
