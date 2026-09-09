@@ -15,10 +15,9 @@ SITE = "RSC Buses"
 LEGAL = "Ronan Byrne Bus Hire"
 DOMAIN = "https://rscbuses.ie"
 EMAIL = "office@rscbuses.ie"
-# TODO: no phone number was supplied in the client brief. Fill it in here and
-# every phone CTA across the site switches on automatically.
-PHONE = ""            # e.g. "087 123 4567"
-PHONE_E164 = ""       # e.g. "+353871234567"
+# Supplied by Sorica 9 Sep 2026. Every phone CTA across the site keys off this.
+PHONE = "087 181 7897"
+PHONE_E164 = "+353871817897"
 TOWN = "Aughrim"
 COUNTY = "Co. Wicklow"
 YEARS = "10"
@@ -113,16 +112,11 @@ NAV = [("/", "Home"), ("/services/", "Services"), ("/golf-trips/", "Golf trips")
        ("/contact/", "Contact")]
 
 # ------------------------------------------------------------------ shell
-def phone_link(label=None, cls="btn btn-amber"):
-    """Phone CTAs only render once PHONE is filled in above."""
-    if not PHONE:
-        return ('<a class="%s" href="/contact/">%s</a>'
-                % (cls, label or "Get a quote"))
-    return ('<a class="%s" href="tel:%s">%s</a>'
-            % (cls, PHONE_E164 or PHONE.replace(" ", ""), label or ("Call " + PHONE)))
+def tel_href():
+    return "tel:" + (PHONE_E164 or PHONE.replace(" ", ""))
 
 def topbar():
-    right = ('<div><a href="tel:%s">Call %s</a></div>' % (PHONE_E164 or PHONE.replace(" ", ""), PHONE)
+    right = ('<div><a href="%s">Call %s</a></div>' % (tel_href(), PHONE)
              if PHONE else '<div><a href="mailto:%s">%s</a></div>' % (EMAIL, EMAIL))
     return ('<div class="topbar"><div class="wrap">'
             '<div>Family-run coach and bus hire, %s, %s &middot; Covering all of Leinster</div>'
@@ -132,6 +126,8 @@ def header(path):
     links = "".join('<a href="%s"%s>%s</a>' % (h, ' class="on"' if h == path else "", t)
                     for h, t in NAV)
     mob = "".join('<a href="%s">%s</a>' % (h, t) for h, t in NAV)
+    if PHONE:
+        mob = ('<a class="mm-call" href="%s">Call %s</a>' % (tel_href(), PHONE)) + mob
     return """%s
 <header class="nav">
   <div class="wrap">
@@ -142,7 +138,7 @@ def header(path):
   </div>
   <div class="mobile-menu" id="mobile-menu">%s</div>
 </header>""" % (topbar(), SITE, LOGO_LIGHT, links,
-                                        phone_link("Get a quote", "btn btn-navy"), mob)
+                                        '<a class="btn btn-navy" href="/contact/">Get a quote</a>', mob)
 
 def cta(title="Need a bus for your group?",
         text="Tell us the date, the numbers and where you are going. We will come back to you with a price, usually the same day."):
@@ -152,17 +148,20 @@ def cta(title="Need a bus for your group?",
     <p>%s</p>
     <div class="cta-actions">
       <a class="btn btn-amber" href="/contact/">Get a quote</a>
-      <a class="btn btn-ghost" href="mailto:%s">Email %s</a>
+      %s
     </div>
   </div>
-</section>""" % (title, text, EMAIL, EMAIL)
+</section>""" % (title, text,
+                 ('<a class="btn btn-ghost" href="%s">Call %s</a>'
+                  % (tel_href(), PHONE)) if PHONE
+                 else '<a class="btn btn-ghost" href="mailto:%s">Email %s</a>' % (EMAIL, EMAIL))
 
 def footer():
     svc = "".join('<li><a href="/services/#%s">%s</a></li>' % (s[0], s[1]) for s in SERVICES[:6])
     nav = "".join('<li><a href="%s">%s</a></li>' % (h, t) for h, t in NAV[1:])
     contact = '<li><a href="mailto:%s">%s</a></li>' % (EMAIL, EMAIL)
     if PHONE:
-        contact = '<li><a href="tel:%s">%s</a></li>' % (PHONE_E164 or PHONE.replace(" ", ""), PHONE) + contact
+        contact = '<li><a href="%s">%s</a></li>' % (tel_href(), PHONE) + contact
     return """<footer class="site">
   <div class="wrap">
     <div class="cols">
@@ -640,8 +639,8 @@ def build_contact():
     opts = "".join('<option value="%s">%s</option>' % (n, n) for _, n, _, _ in SERVICES)
     phone_card = ""
     if PHONE:
-        phone_card = """<div class="ccard"><h3>Phone</h3><p>Ronan is often driving, so if there is no answer leave a message or drop us an email and we will come straight back.</p>
-        <p style="margin-top:8px"><a href="tel:%s">%s</a></p></div>""" % (PHONE_E164 or PHONE.replace(" ", ""), PHONE)
+        phone_card = """<div class="ccard"><h3>Phone</h3><p>Ronan is often driving, so if there is no answer leave a message or send an email and we will come back to you.</p>
+        <p style="margin-top:8px"><a href="%s">%s</a></p></div>""" % (tel_href(), PHONE)
     body = """<section class="phead"><div class="wrap">
     <div class="crumb"><a href="/">Home</a> / Contact</div>
     <h1>Get a quote</h1>

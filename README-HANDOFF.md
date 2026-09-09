@@ -20,21 +20,25 @@ generated. Edit those directly.
 
 ## Outstanding items
 
-1. **Phone number.** Still not supplied. Set `PHONE` and `PHONE_E164` at the
-   top of `build.py` and every phone CTA (top bar, nav button, contact card,
-   schema `telephone`) switches on automatically. Until then the site routes
-   everything to `office@rscbuses.ie`.
-2. **Team photo.** Sorica will send a photo of herself and Ronan once the
+1. **Team photo.** Sorica will send a photo of herself and Ronan once the
    uniforms arrive. Slot is on the About page (the one remaining `ph(...)`
    placeholder in `build.py`). Drop the file in `assets/img/` and swap the
    `ph(...)` for `photo(...)`.
-3. **Seat counts.** The fleet section (home page, `FLEET` in `build.py`)
+2. **Seat counts.** The fleet section (home page, `FLEET` in `build.py`)
    lists vehicle types with no capacities. Ask Sorica for seat counts per
    vehicle and add them to each card.
-4. **Reviews.** None supplied. No testimonial section on the build yet.
-5. **Golf trips.** Sorica said they are "just getting everything in order"
+3. **Reviews.** None supplied. No testimonial section on the build yet.
+4. **Golf trips.** Sorica said they are "just getting everything in order"
    with golf work but that bookings are becoming more frequent. The golf
    page presents it as live. Confirm with her that is fine.
+
+## Phone
+
+`087 181 7897` (supplied by Sorica, 9 Sep 2026). Set once as `PHONE` /
+`PHONE_E164` in `build.py`; it drives the top bar, the first item in the
+mobile menu, the CTA band, the contact card, the footer and the schema
+`telephone`. The nav button stays a quote link to `/contact/` so the two
+paths are distinct.
 
 ## Assets
 
