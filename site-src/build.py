@@ -56,158 +56,6 @@ SERVICES = [
      "users"),
 ]
 
-# ------------------------------------------------------- per-county area data
-# One page per county. Each carries its own town list, its own route note from
-# Aughrim and its own "what we actually get booked for here", because twelve
-# pages with the county name swapped in is a doorway pattern and gets treated
-# as thin content. Keep it that way when editing.
-AREA_DATA = [
- {"slug":"wicklow","name":"Wicklow","short":"Co. Wicklow",
-  "title":"Bus &amp; Coach Hire Wicklow | School Runs, Golf &amp; Group Travel",
-  "desc":"Local bus and coach hire in Co. Wicklow from our base in Aughrim. School transport, golf trips, weddings, airport runs and private group travel across the county.",
-  "lead":"Wicklow is home. We are based in Aughrim and most of our week is spent on roads across this county, which means we know the pick-up points, the school gates and the back roads to the venues without needing a map.",
-  "route":"Everything in Wicklow is a local run for us, from the coast road through Arklow and Wicklow Town to the Blessington and Baltinglass side of the county.",
-  "towns":["Aughrim","Arklow","Wicklow Town","Bray","Greystones","Rathdrum","Baltinglass","Blessington","Enniskerry","Ashford","Carnew","Tinahely","Avoca","Roundwood","Newtownmountkennedy"],
-  "uses":[("bus","School transport","Daily school runs and school tours across the county, with the same vetted drivers week to week."),
-          ("flag","Golf trips","Wicklow has more courses than most counties and we run groups to them all year, plus away trips leaving from here."),
-          ("rings","Weddings","Guest shuttles between churches, hotels and country venues, with late runs so nobody is stuck for a lift."),
-          ("users","Local runs","Club outings, active retirement groups, funerals and any local job where a group needs to travel together.")],
-  "note":"Being local matters most on short-notice work. If something falls through on a Wicklow job we can usually get a vehicle to you the same day."},
-
- {"slug":"dublin","name":"Dublin",
-  "title":"Bus &amp; Coach Hire Dublin | Airport Transfers &amp; Group Travel",
-  "desc":"Coach and minibus hire for Dublin from Co. Wicklow. Dublin Airport transfers, concerts, matches, corporate transport and nights out, timed around you.",
-  "lead":"Dublin is our busiest destination outside Wicklow. The airport is the bulk of it, but we are up and down the M11 all week for concerts, matches, corporate days and groups heading in for a night out.",
-  "route":"A straight run up the N11 and M11 from Aughrim, so early airport departures and late returns from town are both routine.",
-  "towns":["Dublin City","Dublin Airport","Dublin Port","D&uacute;n Laoghaire","Tallaght","Swords","Blanchardstown","Dundrum","Sandyford","Malahide","Howth","Rathmines"],
-  "uses":[("plane","Dublin Airport transfers","Early departures and late landings, with the pick-up built around the flight rather than a fixed timetable. Luggage space for the full group."),
-          ("music","Concerts and events","Groups into the 3Arena, Croke Park, the Aviva and the smaller venues, with a driver waiting to bring everyone home the same night."),
-          ("ball","Matches","Club and supporters' buses for league and championship days, and school teams travelling in for fixtures."),
-          ("users","Corporate transport","Staff transport, conference groups, Christmas parties and client days out.")],
-  "note":"For airport runs give us the flight time rather than the time you want to leave. We will work the pick-up back from it, allowing for traffic on the M11 and the Port Tunnel."},
-
- {"slug":"kildare","name":"Kildare",
-  "title":"Bus &amp; Coach Hire Kildare | Racing, Golf &amp; Corporate Groups",
-  "desc":"Coach and minibus hire for Co. Kildare. Race days at Punchestown, the Curragh and Naas, golf outings, corporate transport and private group travel from a Wicklow base.",
-  "lead":"Kildare is racing and golf country and that is most of what we carry there. Punchestown and the Curragh bring in the big group days, and the courses around the county keep the society work going.",
-  "route":"Across the N81 and down the M9, so Naas, Newbridge and the north of the county are inside an easy run from Aughrim.",
-  "towns":["Naas","Newbridge","Maynooth","Celbridge","Leixlip","Athy","Kildare Town","Clane","Kilcullen","Monasterevin","Punchestown","The Curragh"],
-  "uses":[("ball","Race days","Punchestown, the Curragh and Naas. One pick-up point, everyone arrives together and a driver waiting at the end of the day."),
-          ("flag","Golf outings","Society and club golf at the Kildare courses, with room for clubs and bags."),
-          ("users","Corporate groups","Staff transport and company days out around the Naas and Newbridge business parks."),
-          ("bus","School and club travel","Commuter-belt school work and club teams travelling to fixtures.")],
-  "note":"Race days book up early and traffic around the courses is heavy, so the earlier you can give us a date the better."},
-
- {"slug":"carlow","name":"Carlow",
-  "title":"Bus &amp; Coach Hire Carlow | Group Travel &amp; Club Transport",
-  "desc":"Bus and coach hire for Co. Carlow from nearby Aughrim, Co. Wicklow. Club and school transport, weddings, airport runs and private group travel across the county.",
-  "lead":"Carlow is one of our closest neighbours and a lot of the work there is club and community travel. Short runs to fixtures, buses to matches, and groups heading for Dublin or the airport from the county.",
-  "route":"Straight west from Aughrim on the N81 and R747, so Tullow and Carlow Town are a short run for us rather than a long-distance job.",
-  "towns":["Carlow Town","Tullow","Bagenalstown","Borris","Hacketstown","Leighlinbridge","Rathvilly","Myshall"],
-  "uses":[("ball","Club and school teams","GAA, soccer and school fixtures, home and away, with early starts when the draw asks for it."),
-          ("plane","Airport transfers","Groups from Carlow to Dublin Airport and Rosslare, with the timing built around the flight or sailing."),
-          ("rings","Weddings","Guest shuttles between the church, the venue and the hotels."),
-          ("users","Private group travel","Family occasions, community groups and days out.")],
-  "note":"Because Carlow is close to us we can often cover short-notice club work there when other operators are already booked."},
-
- {"slug":"wexford","name":"Wexford",
-  "title":"Bus &amp; Coach Hire Wexford | Rosslare, Gorey &amp; Group Travel",
-  "desc":"Coach and minibus hire for Co. Wexford. Rosslare ferry transfers, Gorey and Courtown group travel, weddings and club transport from our base in Aughrim, Co. Wicklow.",
-  "lead":"Wexford is straight down the road from us. Rosslare brings the ferry transfers, the Gorey and Courtown side brings summer group work, and there is steady club and wedding travel through the year.",
-  "route":"South on the M11 from Aughrim, which puts Gorey within a short run and Rosslare inside a comfortable one.",
-  "towns":["Wexford Town","Gorey","Enniscorthy","New Ross","Bunclody","Rosslare","Courtown","Ferns","Taghmon"],
-  "uses":[("plane","Rosslare ferry transfers","Groups to and from Rosslare Europort, timed around the sailing rather than a fixed slot."),
-          ("party","Summer group travel","Courtown and the coast for family groups, clubs and days out through the season."),
-          ("rings","Weddings","Shuttles for the Wexford venues, with multiple runs across the evening."),
-          ("ball","Sporting events","County and club travel, home and away.")],
-  "note":"For a sailing, give us the check-in time rather than the departure. Rosslare wants groups in well ahead of the boat."},
-
- {"slug":"kilkenny","name":"Kilkenny",
-  "title":"Bus &amp; Coach Hire Kilkenny | Stag, Hen &amp; Group Travel",
-  "desc":"Coach and minibus hire for Co. Kilkenny. Stag and hen groups, weddings, matches and private group travel to Kilkenny City and across the county.",
-  "lead":"Kilkenny is a destination county for us more than a pick-up one. Stag and hen groups, weekends away and wedding parties heading for the city make up most of what we run there, along with match days.",
-  "route":"Down the M9, which makes Kilkenny City a straightforward run from Aughrim for a day trip or a weekend.",
-  "towns":["Kilkenny City","Callan","Thomastown","Castlecomer","Graiguenamanagh","Ballyragget","Freshford","Urlingford"],
-  "uses":[("party","Stag and hen groups","Full weekends with the itinerary built in, and a driver for the runs between the hotel and the town."),
-          ("rings","Weddings","Guest transport to the Kilkenny venues and late runs back to the hotels."),
-          ("ball","Match days","Supporters travelling to Nowlan Park and club teams on the road."),
-          ("users","Weekends away","Group breaks, walking and activity weekends and city trips.")],
-  "note":"Weekend dates in Kilkenny go early, especially through the summer and around big match weekends. Ask well ahead if you can."},
-
- {"slug":"laois","name":"Laois",
-  "title":"Bus &amp; Coach Hire Laois | Portlaoise &amp; Midlands Group Travel",
-  "desc":"Coach and minibus hire for Co. Laois. Portlaoise, Portarlington and Abbeyleix group travel, club transport, airport transfers and weddings.",
-  "lead":"Laois sits on the motorway network, which makes it easy for us to reach and easy to travel on from. Most of the work there is club transport, airport runs and groups joining up with a trip heading elsewhere.",
-  "route":"Via the M9 and M7, so Portlaoise and the east of the county are a clean motorway run from Aughrim.",
-  "towns":["Portlaoise","Portarlington","Mountmellick","Abbeyleix","Mountrath","Rathdowney","Stradbally","Durrow"],
-  "uses":[("ball","Club and school transport","Teams and supporters travelling to fixtures around the midlands and beyond."),
-          ("plane","Airport transfers","Groups to Dublin Airport, with the run timed around the flight."),
-          ("flag","Golf and society outings","Society days at the Laois courses and groups travelling out of the county."),
-          ("rings","Weddings","Guest shuttles for venues around Portlaoise, Abbeyleix and Stradbally.")],
-  "note":"Laois is handy for picking a group up mid-route if people are travelling from more than one county to the same event."},
-
- {"slug":"offaly","name":"Offaly",
-  "title":"Bus &amp; Coach Hire Offaly | Tullamore, Birr &amp; Group Travel",
-  "desc":"Coach and minibus hire for Co. Offaly. Tullamore and Birr group travel, club transport, distillery and day-trip groups, weddings and airport transfers.",
-  "lead":"Offaly work is mostly day trips and club travel. Tullamore and Birr are the two ends of it, with groups heading out of the county for matches, airports and weekends as often as coming in.",
-  "route":"Out the M7 and across, so Tullamore and Edenderry are the straightforward end of the county for us and Birr is a longer but regular run.",
-  "towns":["Tullamore","Birr","Edenderry","Clara","Banagher","Ferbane","Kilcormac","Daingean"],
-  "uses":[("users","Day trips","Distillery and heritage groups, active retirement outings and community days out."),
-          ("ball","Club transport","GAA and soccer teams travelling to fixtures, home and away."),
-          ("plane","Airport transfers","Groups to Dublin Airport from across the county."),
-          ("party","Nights out and occasions","Group nights out, birthdays and family occasions with a driver waiting.")],
-  "note":"Offaly runs often involve more than one pick-up point. Tell us where everyone is starting from and we will build the route around it."},
-
- {"slug":"meath","name":"Meath",
-  "title":"Bus &amp; Coach Hire Meath | Navan, Trim &amp; Boyne Valley Groups",
-  "desc":"Coach and minibus hire for Co. Meath. Navan and Trim group travel, Boyne Valley tours, school and club transport, weddings and Dublin Airport transfers.",
-  "lead":"Meath brings a mix of tour work and group travel. The Boyne Valley pulls in day groups, and there is steady wedding and school work through the commuter towns closer to Dublin.",
-  "route":"Up the M11 and around the M50 onto the M3, so Navan, Trim and Ashbourne are all a single run from Aughrim.",
-  "towns":["Navan","Trim","Ashbourne","Kells","Dunboyne","Ratoath","Laytown","Bettystown","Dunshaughlin","Slane"],
-  "uses":[("users","Boyne Valley and day tours","Groups to Newgrange, Trim Castle, Slane and the heritage sites, with the driver staying for the day."),
-          ("rings","Weddings","Shuttles for the Meath country-house venues and hotels, with late runs home."),
-          ("bus","School transport","School tours, activity days and outings for the schools across the county."),
-          ("plane","Airport transfers","Short runs to Dublin Airport from anywhere in the county.")],
-  "note":"Tour days work best when you give us the whole itinerary up front. We can hold the group together across several stops rather than quoting each leg."},
-
- {"slug":"louth","name":"Louth",
-  "title":"Bus &amp; Coach Hire Louth | Dundalk, Drogheda &amp; Carlingford",
-  "desc":"Coach and minibus hire for Co. Louth. Dundalk and Drogheda group travel, Carlingford activity and hen and stag weekends, weddings and airport transfers.",
-  "lead":"Louth splits into two kinds of job for us. Dundalk and Drogheda are group travel and airport runs, and Carlingford is weekend work, activity groups and hen and stag parties.",
-  "route":"Up the M11, around the M50 and onto the M1, so the whole county is a motorway run from start to finish.",
-  "towns":["Dundalk","Drogheda","Ardee","Carlingford","Blackrock","Clogherhead","Termonfeckin","Dunleer"],
-  "uses":[("party","Carlingford weekends","Hen and stag groups and activity weekends, with the runs between the accommodation and the town covered."),
-          ("plane","Airport transfers","Dublin Airport from the north-east, including early departures."),
-          ("rings","Weddings","Guest shuttles for the Louth and Cooley venues."),
-          ("ball","Sporting events","Club and supporters' travel, north and south.")],
-  "note":"Carlingford weekends usually need more than one run across the two days. Tell us the plan and we will price the whole weekend rather than each leg."},
-
- {"slug":"westmeath","name":"Westmeath",
-  "title":"Bus &amp; Coach Hire Westmeath | Mullingar, Athlone &amp; Group Travel",
-  "desc":"Coach and minibus hire for Co. Westmeath. Mullingar and Athlone group travel, weddings, club transport and airport transfers from Aughrim, Co. Wicklow.",
-  "lead":"Westmeath is wedding and group travel country for us. Mullingar and Athlone have the venues and the hotels, and Athlone in particular works as a meeting point for groups coming from several directions.",
-  "route":"Across on the M4 and M6, which makes Mullingar and Athlone a single clean run rather than a cross-country job.",
-  "towns":["Mullingar","Athlone","Moate","Kinnegad","Castlepollard","Kilbeggan","Rochfortbridge","Tyrrellspass"],
-  "uses":[("rings","Weddings","Shuttles for the lakeside and country-house venues, with multiple runs across the evening."),
-          ("users","Group travel","Community groups, active retirement outings and company days out."),
-          ("ball","Club transport","Teams and supporters travelling to fixtures."),
-          ("plane","Airport transfers","Groups to Dublin Airport, timed around the flight.")],
-  "note":"Athlone is a useful joining point if your group is coming from both the midlands and the west. We can pick up there on the way through."},
-
- {"slug":"longford","name":"Longford",
-  "title":"Bus &amp; Coach Hire Longford | Group Travel &amp; Family Breaks",
-  "desc":"Coach and minibus hire for Co. Longford. Group travel to Center Parcs Longford Forest, club transport, weddings and Dublin Airport transfers.",
-  "lead":"Longford is our furthest regular county and most of it is one of two things: family and group breaks heading for Longford Forest, or groups travelling out of the county for a match, a flight or a weekend.",
-  "route":"Out the N4 past Mullingar. It is the longest of our standard runs, so Longford jobs are usually booked a little further ahead.",
-  "towns":["Longford Town","Granard","Edgeworthstown","Ballymahon","Lanesborough","Newtownforbes","Drumlish"],
-  "uses":[("users","Family and group breaks","Larger family groups and clubs travelling together to Longford Forest and the surrounding area."),
-          ("ball","Club transport","Teams and supporters on the road, often with long days."),
-          ("plane","Airport transfers","Dublin Airport runs, with early starts allowed for."),
-          ("rings","Weddings","Guest shuttles for the Longford and south Leitrim venues.")],
-  "note":"Longford is far enough out that availability is tighter. Give us as much notice as you can, particularly for weekends."},
-]
-AREA_BY_SLUG = {a["slug"]: a for a in AREA_DATA}
-
 ICONS = {
 "bus": '<path d="M4 16V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M4 11h16"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/>',
 "plane": '<path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a1 1 0 0 0-1 1.6L8 11l-2 3H3l2 3 3 2 1-3 3-2 3.2 4.2a1 1 0 0 0 1.6-1z"/>',
@@ -571,7 +419,7 @@ def build_home():
     "years": YEARS, "drivers": DRIVERS,
     "photo": photo("coach-setra.jpg", "The RSC Buses Setra coach, still carrying the Ronan Byrne name on the front"),
     "photo2": photo("interior.jpg", "Inside one of the coaches, reclining seats with belts"),
-    "pills": "".join('<a href="/areas/%s/">%s</a>' % (a["slug"], a["name"]) for a in AREA_DATA),
+    "pills": "".join("<span>%s</span>" % a for a in AREAS),
     "faq": faq_block(FAQS[:5]), "cta": cta()}
     page("index.html",
          "Bus &amp; Coach Hire Wicklow | School, Airport &amp; Golf Trips | %s" % SITE,
@@ -755,9 +603,9 @@ def build_about():
          body)
 
 def build_areas():
-    cards = "".join("""<a class="card" href="/areas/%s/"><div class="ico">%s</div><h3>%s</h3>
-      <p>%s</p><span class="more">Bus hire in %s</span></a>"""
-      % (a["slug"], icon("map"), a["name"], a["route"], a["name"]) for a in AREA_DATA)
+    cards = "".join("""<div class="card"><div class="ico">%s</div><h3>%s</h3>
+      <p>Group travel, school transport, airport runs and private hire throughout %s and the surrounding area.</p></div>"""
+      % (icon("map"), a, a) for a in AREAS)
     body = """<section class="phead"><div class="wrap">
     <div class="crumb"><a href="/">Home</a> / Areas covered</div>
     <h1>Areas we cover</h1>
@@ -781,70 +629,6 @@ def build_areas():
          "Areas Covered | Bus Hire Across Leinster | %s" % SITE,
          "Bus and coach hire from %s, %s covering Wicklow, Dublin, Kildare, Carlow, Wexford, Kilkenny and the rest of Leinster, with longer trips on request." % (TOWN, COUNTY),
          body)
-
-def area_ld(a):
-    """Breadcrumb plus a Service node naming the county, so the page has
-    something of its own in the markup rather than reusing the site LD."""
-    return ('<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList",'
-            '"itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"%(d)s/"},'
-            '{"@type":"ListItem","position":2,"name":"Areas covered","item":"%(d)s/areas/"},'
-            '{"@type":"ListItem","position":3,"name":"%(n)s","item":"%(d)s/areas/%(s)s/"}]}</script>\n'
-            '<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service",'
-            '"serviceType":"Bus and coach hire","provider":{"@id":"%(d)s/#business"},'
-            '"areaServed":{"@type":"AdministrativeArea","name":"County %(n)s"},'
-            '"description":"%(desc)s"}</script>\n'
-            % {"d": DOMAIN, "n": a["name"], "s": a["slug"],
-               "desc": a["lead"].replace('"', "&quot;")})
-
-def build_area_pages():
-    for a in AREA_DATA:
-        uses = "".join('<div class="card"><div class="ico">%s</div><h3>%s</h3><p>%s</p></div>'
-                       % (icon(i), t, b) for i, t, b in a["uses"])
-        others = [o for o in AREA_DATA if o["slug"] != a["slug"]][:6]
-        nearby = "".join('<a href="/areas/%s/">%s</a>' % (o["slug"], o["name"]) for o in others)
-        body = """<section class="phead"><div class="wrap">
-    <div class="crumb"><a href="/">Home</a> / <a href="/areas/">Areas covered</a> / %(name)s</div>
-    <h1>Bus and coach hire in %(name)s</h1>
-    <p>%(lead)s</p>
-  </div></section>%(trust)s
-
-<section class="sec"><div class="wrap split">
-  <div>
-    <div class="eyebrow">Getting there</div>
-    <h2>Covering %(name)s from %(base)s</h2>
-    <p class="lede" style="margin-top:12px">%(route)s</p>
-    <p class="lede" style="margin-top:14px">We quote every job individually rather than off a fixed price list, so tell us the date, the numbers, where everyone is starting from and where you are going.</p>
-    <div style="margin-top:24px"><a class="btn btn-navy" href="/contact/">Get a quote</a></div>
-  </div>
-  <div>%(photo)s</div>
-</div></section>
-
-<section class="sec tint"><div class="wrap">
-  <div class="sec-head center"><div class="eyebrow">What we carry</div><h2>Typical %(name)s jobs</h2></div>
-  <div class="grid g4">%(uses)s</div>
-</div></section>
-
-<section class="sec"><div class="wrap">
-  <div class="sec-head center"><div class="eyebrow">Pick-up points</div><h2>Towns we collect from in %(name)s</h2>
-    <p class="lede" style="margin:10px auto 0">Not an exhaustive list. If your pick-up point is not here, ask anyway.</p></div>
-  <div class="pills" style="justify-content:center">%(towns)s</div>
-  <div class="note" style="max-width:720px;margin:30px auto 0">%(note)s</div>
-</div></section>
-
-<section class="sec tint"><div class="wrap">
-  <div class="sec-head center"><div class="eyebrow">Nearby</div><h2>Other counties we cover</h2></div>
-  <div class="pills" style="justify-content:center">%(nearby)s</div>
-  <div style="text-align:center;margin-top:26px"><a class="btn btn-line" href="/areas/">All areas covered</a></div>
-</div></section>
-%(cta)s""" % {"name": a["name"], "lead": a["lead"], "route": a["route"], "note": a["note"],
-              "base": TOWN, "trust": trustband(), "uses": uses,
-              "photo": photo("fleet-coach-midi.jpg", "RSC Buses coach and midi-coach, available for hire in %s" % a["name"]),
-              "towns": "".join("<span>%s</span>" % t for t in a["towns"]),
-              "nearby": nearby,
-              "cta": cta("Travelling in %s?" % a["name"],
-                         "Send us the date, the numbers and where you are going. We will come back with a price, usually the same day.")}
-        page("areas/%s/index.html" % a["slug"], a["title"] + " | " + SITE, a["desc"],
-             body, extra_ld=area_ld(a), nav_path="/areas/")
 
 def build_faqs():
     body = """<section class="phead"><div class="wrap">
@@ -964,8 +748,7 @@ def build_404():
 
 PAGES_FOR_SITEMAP = [("/", "1.0"), ("/services/", "0.9"), ("/golf-trips/", "0.9"),
                      ("/areas/", "0.8"), ("/about/", "0.7"), ("/faqs/", "0.7"),
-                     ("/contact/", "0.9"), ("/privacy/", "0.2")] + \
-                    [("/areas/%s/" % a["slug"], "0.7") for a in AREA_DATA]
+                     ("/contact/", "0.9"), ("/privacy/", "0.2")]
 
 def build_meta():
     import datetime
@@ -987,6 +770,5 @@ def build_meta():
 
 if __name__ == "__main__":
     build_home(); build_services(); build_golf(); build_about()
-    build_areas(); build_area_pages(); build_faqs(); build_contact()
-    build_privacy(); build_404(); build_meta()
+    build_areas(); build_faqs(); build_contact(); build_privacy(); build_404(); build_meta()
     print("\nDone. Open index.html in a browser or run: npx serve .")
