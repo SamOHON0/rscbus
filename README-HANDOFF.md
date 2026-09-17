@@ -115,11 +115,10 @@ on the page; the `action`/`method` on the form is the no-JS fallback. A failed
 post falls back to a `mailto:` link so the enquiry is never silently dropped.
 `_gotcha` is a honeypot, hidden by `.hp` in `assets/style.css`.
 
-**The form is dead until the Formspree ID is swapped in.** `contact/index.html`
-still reads `action="https://formspree.io/f/[FORM-ID]"`. Create the form in the
-SquareTwo Formspree account with `office@rscbuses.ie` as the recipient, then
-replace `[FORM-ID]`. Send one test enquiry and confirm it lands in Sorica's
-inbox and that Reply goes back to the customer, not to Formspree.
+The form id lives in `FORMSPREE` at the top of `site-src/build.py`, currently
+`xeaoqpyq`, delivering to `office@rscbuses.ie`. Sorica confirmed the recipient
+address with Formspree on 17 Sep 2026. Free tier is capped at roughly 50
+submissions a month, so keep an eye on it if enquiries pick up.
 
 Formspree is now named as a processor in `privacy/index.html` (What we collect,
 and Third parties). If the form provider ever changes, that page changes too.
