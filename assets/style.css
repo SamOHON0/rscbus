@@ -60,6 +60,10 @@ h3{font-size:20px}
 .topbar .wrap{display:flex;justify-content:space-between;align-items:center;min-height:38px;gap:14px;flex-wrap:wrap;padding-top:5px;padding-bottom:5px}
 .topbar a{color:var(--amber)}
 .topbar a:hover{text-decoration:underline}
+@media(max-width:620px){
+  .topbar .wrap{justify-content:center}
+  .topbar .wrap>div:first-child{display:none}
+}
 
 /* nav */
 header.nav{position:sticky;top:0;z-index:60;background:rgba(247,249,251,.95);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line)}
@@ -106,12 +110,20 @@ header.nav{position:sticky;top:0;z-index:60;background:rgba(247,249,251,.95);bac
 .hero-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
 @media(max-height:820px){.hero-inner{min-height:min(580px,76vh)}}
 @media(max-width:1080px){.hero-bg{width:54%}.hero-inner{grid-template-columns:minmax(0,460px);min-height:520px}}
+/* Mobile: a landscape photo squeezed into a portrait hero gets its sides
+   chopped off and then buried under the scrim. So stack instead: the photo
+   runs full width as its own band, uncropped, and the copy sits on navy
+   underneath it. */
 @media(max-width:900px){
-  .hero{--hero-focus:50% 50%}
-  .hero-bg{inset:0;width:100%;-webkit-mask-image:none;mask-image:none}
-  .hero-inner{min-height:clamp(420px,58vh,500px);padding:44px 0 48px;grid-template-columns:minmax(0,640px)}
-  .hero-bg::after{background:linear-gradient(180deg,rgba(15,37,50,.88) 0%,rgba(15,37,50,.74) 45%,rgba(15,37,50,.6) 100%)}
-  .hero p{max-width:36ch}
+  .hero{display:flex;flex-direction:column}
+  /* no aspect-ratio: let the image set its own height so nothing crops */
+  .hero-bg{position:relative;inset:auto;width:100%;
+    -webkit-mask-image:none;mask-image:none}
+  .hero-bg img{height:auto;display:block}
+  .hero-bg::after{background:linear-gradient(180deg,rgba(15,37,50,0) 55%,rgba(15,37,50,.55) 82%,var(--navy-deep) 100%)}
+  .hero-inner{min-height:0;padding:26px 0 44px;grid-template-columns:minmax(0,640px)}
+  .hero p{max-width:38ch}
+  .hero-actions{margin-top:22px}
 }
 
 /* page header (interior) */

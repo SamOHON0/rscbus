@@ -314,7 +314,10 @@ def ph(label, cls="ph"):
 # ------------------------------------------------------------------ pages
 def build_home():
     body = """<section class="hero">
-  <div class="hero-bg"><img src="/assets/img/hero-fleet.jpg" alt="Two of the RSC Buses fleet, a Setra coach and a midi-coach, parked side by side" fetchpriority="high" decoding="async"></div>
+  <div class="hero-bg"><picture>
+    <source media="(max-width:900px)" srcset="/assets/img/hero-fleet-sm.jpg">
+    <img src="/assets/img/hero-fleet.jpg" alt="Two of the RSC Buses fleet, a Setra coach and a midi-coach, parked side by side" fetchpriority="high" decoding="async">
+  </picture></div>
   <div class="wrap"><div class="hero-inner"><div class="hero-copy">
     <h1>Bus and coach hire in <em>Wicklow</em>, across all of Leinster</h1>
     <p>%(legal)s is a family-run transport business based in %(town)s, %(county)s. School runs, airport transfers, golf trips, weddings and private group travel across Leinster.</p>
