@@ -17,7 +17,7 @@ DOMAIN = "https://rscbuses.ie"
 EMAIL = "office@rscbuses.ie"
 # Formspree form id for the enquiry form. The form does nothing until this
 # is a real id from the SquareTwo Formspree account, delivering to EMAIL.
-FORMSPREE = "[FORM-ID]"
+FORMSPREE = "xeaoqpyq"
 # Supplied by Sorica 9 Sep 2026. Every phone CTA across the site keys off this.
 PHONE = "087 181 7897"
 PHONE_E164 = "+353871817897"
