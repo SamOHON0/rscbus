@@ -18,12 +18,35 @@ That rewrites `index.html`, `services/`, `golf-trips/`, `areas/`, `about/`,
 Assets (`assets/style.css`, `assets/site.js`, `assets/favicon.svg`) are NOT
 generated. Edit those directly.
 
+## Go-live (17 Sep 2026)
+
+Domain `rscbuses.ie` resolves to 91.210.235.15 (`cerise.webhostingireland.ie`,
+a Blacknight brand). Their `office@rscbuses.ie` mail almost certainly lives
+there too, so **only change the web records, never the MX**.
+
+1. Vercel project → Settings → Domains → add `rscbuses.ie` and
+   `www.rscbuses.ie`. Set `rscbuses.ie` as the primary (www redirects to it).
+2. In the Web Hosting Ireland / Blacknight DNS panel for the domain:
+   - `A` record for `@` → `76.76.21.21`
+   - `CNAME` for `www` → `cname.vercel-dns.com`
+   - Leave `MX`, mail-related `TXT` (SPF, DKIM, DMARC) and everything else
+     exactly as they are.
+   Delete any existing `A`/`AAAA`/`CNAME` for `@` and `www` that point at the
+   old host, otherwise the records conflict.
+3. Vercel will show the domain as valid once DNS propagates (minutes to a
+   couple of hours) and will issue the certificate itself.
+4. Send a test email to office@rscbuses.ie afterwards to confirm mail still
+   flows. If Sorica's email breaks, the MX got touched; put it back.
+5. After launch: Google Search Console (verify via the DNS TXT or the HTML
+   file method), submit `https://rscbuses.ie/sitemap.xml`; Google Business
+   Profile pointing at the new URL.
+
 ## Outstanding items
 
 1. **Team photo.** Sorica will send a photo of herself and Ronan once the
-   uniforms arrive. Slot is on the About page (the one remaining `ph(...)`
-   placeholder in `build.py`). Drop the file in `assets/img/` and swap the
-   `ph(...)` for `photo(...)`.
+   uniforms arrive (still waiting on the order as of 16 Sep). The About page
+   "The team" slot currently shows `fleet-coach-midi.jpg`; the `TODO` in
+   `build_about()` marks the line to swap.
 2. **Seat counts.** The fleet section (home page, `FLEET` in `build.py`)
    lists vehicle types with no capacities. Ask Sorica for seat counts per
    vehicle and add them to each card.
@@ -39,6 +62,16 @@ generated. Edit those directly.
 mobile menu, the CTA band, the contact card, the footer and the schema
 `telephone`. The nav button stays a quote link to `/contact/` so the two
 paths are distinct.
+
+## Fonts
+
+Loaded from Google Fonts (Manrope, Inter, Libre Baskerville). Self-hosting
+would be tidier for GDPR but every font CDN was blocked from the build
+environment. To do it from your own machine: open the Google Fonts CSS URL
+from `build.py` in a browser, save the latin `.woff2` files it references
+into `assets/fonts/`, write matching `@font-face` rules, and swap the
+`<link>` in `page()` for a local stylesheet. The privacy page mentions
+Google Fonts; update it when you switch.
 
 ## Assets
 

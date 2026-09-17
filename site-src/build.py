@@ -167,18 +167,18 @@ def footer():
     <div class="cols">
       <div class="fbrand">
         <div class="brand">%s</div>
-        <p>%s, trading as %s. Family-run bus and coach hire based in %s, %s, serving groups across Leinster for over %s years.</p>
+        <p>%s Ltd. Family-run bus and coach hire based in %s, %s, serving groups across Leinster for over %s years.</p>
       </div>
       <div><h4>Services</h4><ul>%s</ul></div>
       <div><h4>Site</h4><ul>%s</ul></div>
       <div><h4>Contact</h4><ul>%s<li>%s, %s</li></ul></div>
     </div>
     <div class="legal">
-      <div>&copy; <span data-year></span> %s. All rights reserved.</div>
+      <div>&copy; <span data-year></span> %s Ltd. All rights reserved. &middot; <a href="/privacy/">Privacy</a></div>
       <div>Website by <a href="https://squaretwo.ie" rel="noopener">SquareTwo</a></div>
     </div>
   </div>
-</footer>""" % (LOGO_DARK, SITE, LEGAL, TOWN, COUNTY, YEARS, svc, nav, contact, TOWN, COUNTY, SITE)
+</footer>""" % (LOGO_DARK, SITE, TOWN, COUNTY, YEARS, svc, nav, contact, TOWN, COUNTY, SITE)
 
 BASE_LD = """{
   "@context":"https://schema.org","@type":"MotorVehicleDealership","@id":"%(d)s/#business",
@@ -201,15 +201,20 @@ def base_ld():
 
 def page(path, title, desc, body, extra_ld="", nav_path=None):
     url = DOMAIN + ("/" if path == "index.html" else "/" + path.rsplit("/", 1)[0] + "/")
+    if path == "404.html":
+        url = DOMAIN + "/404.html"
+        robots = '<meta name="robots" content="noindex, follow">'
+    else:
+        robots = '<meta name="robots" content="index, follow">\n<link rel="canonical" href="%s">' % url
     html = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en-IE">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f2532">
 <title>%(title)s</title>
 <meta name="description" content="%(desc)s">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="%(url)s">
+%(robots)s
 <meta property="og:title" content="%(title)s">
 <meta property="og:description" content="%(desc)s">
 <meta property="og:url" content="%(url)s">
@@ -232,7 +237,7 @@ def page(path, title, desc, body, extra_ld="", nav_path=None):
 <script src="/assets/site.js"></script>
 </body>
 </html>
-""" % {"title": title, "desc": desc, "url": url, "ld": base_ld(), "d": DOMAIN,
+""" % {"title": title, "desc": desc, "url": url, "ld": base_ld(), "d": DOMAIN, "robots": robots,
        "extra": extra_ld, "header": header(nav_path or ("/" if path == "index.html"
                                                         else "/" + path.rsplit("/", 1)[0] + "/")),
        "body": body, "footer": footer()}
@@ -585,7 +590,8 @@ def build_about():
 %(cta)s""" % {"site": SITE, "legal": LEGAL, "town": TOWN, "county": COUNTY, "years": YEARS,
               "drivers": DRIVERS, "trust": trustband(),
               "p1": photo("coach-setra.jpg", "The Setra coach, still carrying the Ronan Byrne name it has always had"),
-              "p2": ph("Photo of Ronan and Sorica coming soon"),
+              # TODO: swap for the photo of Ronan and Sorica once the uniforms arrive
+              "p2": photo("fleet-coach-midi.jpg", "Two of the RSC Buses fleet parked side by side"),
               "i1": icon("shield"), "i2": icon("bus"), "i3": icon("clock"),
               "cta": cta()}
     page("about/index.html",
@@ -686,6 +692,42 @@ def build_contact():
          "Get a quote for bus or coach hire from %s. Email %s with your date, group size and destination and we will come back to you, usually the same day." % (SITE, EMAIL),
          body)
 
+def build_privacy():
+    body = """<section class="phead"><div class="wrap">
+    <div class="crumb"><a href="/">Home</a> / Privacy</div>
+    <h1>Privacy policy</h1>
+    <p>How %(site)s Ltd handles the information you send us.</p>
+  </div></section>
+
+<section class="sec"><div class="wrap prose" style="max-width:780px">
+  <h2 style="margin-top:0">Who we are</h2>
+  <p>%(site)s Ltd is a bus and coach hire business based in %(town)s, %(county)s. You can contact us at <a href="mailto:%(email)s">%(email)s</a>%(phone)s.</p>
+
+  <h2>What we collect and why</h2>
+  <p>This website does not have a booking system and does not store anything you type into it. The enquiry form opens your own email app with the details filled in, and nothing is sent until you press send in that app.</p>
+  <p>When you email or ring us we receive whatever you choose to give us, usually your name, phone number, email address and the details of the trip you are asking about. We use that to reply to you, to price and arrange the hire, and to keep a record of the booking. We do not sell it or pass it to anyone for marketing.</p>
+
+  <h2>How long we keep it</h2>
+  <p>Enquiries that do not go ahead are deleted within a reasonable period. Booking records are kept for as long as we need them for accounting and insurance purposes, after which they are deleted.</p>
+
+  <h2>Cookies and tracking</h2>
+  <p>This site sets no cookies and runs no analytics or advertising tracking.</p>
+
+  <h2>Third parties</h2>
+  <p>The site is hosted by Vercel, which keeps standard server logs (such as your IP address and the pages requested) for security and to keep the site running. The fonts on the site are loaded from Google Fonts, which means your browser requests the font files from Google when the page loads. Neither is used by us to identify you.</p>
+
+  <h2>Your rights</h2>
+  <p>Under GDPR you can ask us what personal information we hold about you, ask us to correct it or delete it, and object to how we use it. Email <a href="mailto:%(email)s">%(email)s</a> and we will deal with it. If you are not happy with our response you can contact the Data Protection Commission at <a href="https://www.dataprotection.ie" rel="noopener">dataprotection.ie</a>.</p>
+
+  <h2>Changes</h2>
+  <p>If we change how we handle your information we will update this page. Last updated %(date)s.</p>
+</div></section>""" % {"site": SITE, "town": TOWN, "county": COUNTY, "email": EMAIL,
+                       "phone": (" or on %s" % PHONE) if PHONE else "",
+                       "date": __import__("datetime").date.today().strftime("%-d %B %Y")}
+    page("privacy/index.html", "Privacy Policy | %s" % SITE,
+         "How %s Ltd handles the information you send us when you enquire about bus or coach hire." % SITE,
+         body)
+
 def build_404():
     body = """<section class="phead"><div class="wrap">
     <h1>Page not found</h1>
@@ -703,7 +745,7 @@ def build_404():
 
 PAGES_FOR_SITEMAP = [("/", "1.0"), ("/services/", "0.9"), ("/golf-trips/", "0.9"),
                      ("/areas/", "0.8"), ("/about/", "0.7"), ("/faqs/", "0.7"),
-                     ("/contact/", "0.9")]
+                     ("/contact/", "0.9"), ("/privacy/", "0.2")]
 
 def build_meta():
     import datetime
@@ -725,5 +767,5 @@ def build_meta():
 
 if __name__ == "__main__":
     build_home(); build_services(); build_golf(); build_about()
-    build_areas(); build_faqs(); build_contact(); build_404(); build_meta()
+    build_areas(); build_faqs(); build_contact(); build_privacy(); build_404(); build_meta()
     print("\nDone. Open index.html in a browser or run: npx serve .")
