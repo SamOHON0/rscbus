@@ -418,7 +418,7 @@ def build_home():
     "site": SITE, "legal": LEGAL, "town": TOWN, "county": COUNTY,
     "years": YEARS, "drivers": DRIVERS,
     "photo": photo("coach-setra.jpg", "The RSC Buses Setra coach, still carrying the Ronan Byrne name on the front"),
-    "photo2": photo("transit-trailer.jpg", "Navy minibus with the enclosed luggage trailer used for golf trips and airport groups"),
+    "photo2": photo("interior.jpg", "Inside one of the coaches, reclining seats with belts"),
     "pills": "".join("<span>%s</span>" % a for a in AREAS),
     "faq": faq_block(FAQS[:5]), "cta": cta()}
     page("index.html",
