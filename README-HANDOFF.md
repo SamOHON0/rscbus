@@ -63,6 +63,21 @@ mobile menu, the CTA band, the contact card, the footer and the schema
 `telephone`. The nav button stays a quote link to `/contact/` so the two
 paths are distinct.
 
+## County pages
+
+`/areas/<county>/` for all twelve Leinster counties, generated from
+`AREA_DATA` in `build.py`. Each page carries its own lead paragraph, route
+note from Aughrim, four "typical jobs" cards, its own town list and its own
+closing note, plus BreadcrumbList and Service JSON-LD naming the county.
+
+**Keep them different.** Twelve pages with the county name swapped in is a
+doorway pattern and Google treats it as thin. If you add a county, write it
+real: actual towns, the road you would actually take, and what that county
+is genuinely booked for. Do not copy another county's block and rename it.
+
+Linked from the areas index cards, the home page county pills, and a
+"nearby counties" block on each page.
+
 ## Fonts
 
 Loaded from Google Fonts (Manrope, Inter, Libre Baskerville). Self-hosting
