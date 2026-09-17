@@ -30,17 +30,24 @@
     });
   }
 
-  // Enquiry form. There is no booking system and no backend on this build,
-  // so the form composes an email to the office instead. To move to a real
-  // endpoint later, set data-endpoint on the form and POST instead.
+  // Enquiry form. Posts to Formspree over AJAX so the customer stays on the
+  // page instead of being bounced to formspree.io. The form also carries
+  // action/method, so if this script never runs the browser still submits it
+  // natively. If the post fails we hand back a mailto so the enquiry is not
+  // silently lost.
   var form = document.querySelector('form.enq');
   if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var get = function (n) {
-        var el = form.querySelector('[name="' + n + '"]');
-        return el ? el.value.trim() : '';
-      };
+    var get = function (n) {
+      var el = form.querySelector('[name="' + n + '"]');
+      return el ? el.value.trim() : '';
+    };
+
+    var subjectLine = function () {
+      return 'Website enquiry - ' + (get('service') || 'Bus hire') +
+        (get('date') ? ' - ' + get('date') : '');
+    };
+
+    var mailtoFallback = function () {
       var lines = [
         'Name: ' + get('name'),
         'Phone: ' + get('phone'),
@@ -54,17 +61,45 @@
         'Details:',
         get('message')
       ];
-      var subject = 'Website enquiry - ' + (get('service') || 'Bus hire') +
-        (get('date') ? ' - ' + get('date') : '');
-      window.location.href = 'mailto:office@rscbuses.ie?subject=' +
-        encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      return 'mailto:office@rscbuses.ie?subject=' + encodeURIComponent(subjectLine()) +
+        '&body=' + encodeURIComponent(lines.join('\n'));
+    };
+
+    var say = function (html) {
       var note = form.querySelector('.formnote');
-      if (note) {
-        note.textContent = 'Opening your email app with the details filled in. ' +
-          'If nothing happens, email office@rscbuses.ie directly.';
-        note.style.color = '#14314f';
-        note.style.fontWeight = '700';
-      }
+      if (!note) { return; }
+      note.innerHTML = html;
+      note.style.color = '#14314f';
+      note.style.fontWeight = '700';
+    };
+
+    form.addEventListener('submit', function (e) {
+      // No fetch means an old browser. Let it post the form the normal way.
+      if (!window.fetch || !window.FormData) { return; }
+      e.preventDefault();
+
+      var btn = form.querySelector('[type="submit"]');
+      var label = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+      // Give the office a useful subject line rather than a generic one.
+      var subj = form.querySelector('[name="_subject"]');
+      if (subj) { subj.value = subjectLine(); }
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) { throw new Error('rejected'); }
+        form.reset();
+        say('Thanks, that is with us. We will come back to you, usually the same day.');
+        if (btn) { btn.textContent = 'Enquiry sent'; }
+      }).catch(function () {
+        say('Sorry, that did not send. <a href="' + mailtoFallback() + '">Send it by email instead</a>, ' +
+          'or ring us on <a href="tel:+353871817897">087 181 7897</a>.');
+        if (btn) { btn.disabled = false; btn.textContent = label; }
+      });
     });
   }
 

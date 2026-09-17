@@ -229,6 +229,8 @@ form.enq textarea{min-height:130px;resize:vertical}
 form.enq .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:560px){form.enq .two{grid-template-columns:minmax(0,1fr)}}
 .formnote{font-size:13.5px;color:var(--ink-faint);margin-top:12px}
+/* Honeypot. Real people never see it; bots fill it and Formspree bins those. */
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .contact-cards{display:grid;gap:16px}
 .ccard{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px}
 .ccard h3{font-size:17px;margin-bottom:6px}

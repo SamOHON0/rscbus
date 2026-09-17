@@ -15,6 +15,9 @@ SITE = "RSC Buses"
 LEGAL = "Ronan Byrne Bus Hire"
 DOMAIN = "https://rscbuses.ie"
 EMAIL = "office@rscbuses.ie"
+# Formspree form id for the enquiry form. The form does nothing until this
+# is a real id from the SquareTwo Formspree account, delivering to EMAIL.
+FORMSPREE = "[FORM-ID]"
 # Supplied by Sorica 9 Sep 2026. Every phone CTA across the site keys off this.
 PHONE = "087 181 7897"
 PHONE_E164 = "+353871817897"
@@ -657,7 +660,9 @@ def build_contact():
   </div></section>%(trust)s
 
 <section class="sec"><div class="wrap contact-grid">
-  <form class="enq" novalidate>
+  <form class="enq" action="https://formspree.io/f/%(formspree)s" method="POST">
+    <input type="hidden" name="_subject" value="Website enquiry - RSC Buses">
+    <div class="hp" aria-hidden="true"><label for="f-hp">Website</label><input id="f-hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
     <div class="two">
       <div class="row"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
       <div class="row"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
@@ -675,7 +680,7 @@ def build_contact():
     <div class="row"><label for="f-dest">Destination</label><input id="f-dest" name="destination" type="text"></div>
     <div class="row"><label for="f-msg">Anything else we should know</label><textarea id="f-msg" name="message" placeholder="Timings, return journey, extra stops, luggage, anything at all."></textarea></div>
     <button class="btn btn-amber" type="submit" style="width:100%%">Send enquiry</button>
-    <p class="formnote">This opens your email app with the details filled in, addressed to %(email)s. We do not take bookings online. Every job is quoted individually.</p>
+    <p class="formnote">Goes straight to the office at %(email)s. We do not take bookings online — every job is quoted individually, usually the same day.</p>
   </form>
 
   <div class="contact-cards">
@@ -689,11 +694,17 @@ def build_contact():
       <p>We can supply vetting, insurance and vehicle documentation for your records. Just ask when you enquire.</p></div>
   </div>
 </div></section>""" % {"trust": trustband(), "opts": opts, "email": EMAIL,
-                       "town": TOWN, "county": COUNTY, "phonecard": phone_card}
+                       "town": TOWN, "county": COUNTY, "phonecard": phone_card,
+                       "formspree": FORMSPREE}
     page("contact/index.html",
          "Contact &amp; Quotes | %s, %s %s" % (SITE, TOWN, COUNTY),
          "Get a quote for bus or coach hire from %s. Email %s with your date, group size and destination and we will come back to you, usually the same day." % (SITE, EMAIL),
          body)
+
+def _today():
+    import datetime
+    return datetime.date.today()
+
 
 def build_privacy():
     body = """<section class="phead"><div class="wrap">
@@ -707,7 +718,7 @@ def build_privacy():
   <p>%(site)s Ltd is a bus and coach hire business based in %(town)s, %(county)s. You can contact us at <a href="mailto:%(email)s">%(email)s</a>%(phone)s.</p>
 
   <h2>What we collect and why</h2>
-  <p>This website does not have a booking system and does not store anything you type into it. The enquiry form opens your own email app with the details filled in, and nothing is sent until you press send in that app.</p>
+  <p>This website does not have a booking system. When you send the enquiry form on the contact page, the details you have typed are passed to our office inbox by our form provider, Formspree, who keep a copy in our account with them. Nothing you type is stored on this website itself.</p>
   <p>When you email or ring us we receive whatever you choose to give us, usually your name, phone number, email address and the details of the trip you are asking about. We use that to reply to you, to price and arrange the hire, and to keep a record of the booking. We do not sell it or pass it to anyone for marketing.</p>
 
   <h2>How long we keep it</h2>
@@ -717,7 +728,7 @@ def build_privacy():
   <p>This site sets no cookies and runs no analytics or advertising tracking.</p>
 
   <h2>Third parties</h2>
-  <p>The site is hosted by Vercel, which keeps standard server logs (such as your IP address and the pages requested) for security and to keep the site running. The fonts on the site are loaded from Google Fonts, which means your browser requests the font files from Google when the page loads. Neither is used by us to identify you.</p>
+  <p>The site is hosted by Vercel, which keeps standard server logs (such as your IP address and the pages requested) for security and to keep the site running. Enquiries sent through the contact form are delivered to us by Formspree, who process the details you enter so that they reach our office inbox. The fonts on the site are loaded from Google Fonts, which means your browser requests the font files from Google when the page loads. None of these is used by us to identify you.</p>
 
   <h2>Your rights</h2>
   <p>Under GDPR you can ask us what personal information we hold about you, ask us to correct it or delete it, and object to how we use it. Email <a href="mailto:%(email)s">%(email)s</a> and we will deal with it. If you are not happy with our response you can contact the Data Protection Commission at <a href="https://www.dataprotection.ie" rel="noopener">dataprotection.ie</a>.</p>
@@ -726,7 +737,7 @@ def build_privacy():
   <p>If we change how we handle your information we will update this page. Last updated %(date)s.</p>
 </div></section>""" % {"site": SITE, "town": TOWN, "county": COUNTY, "email": EMAIL,
                        "phone": (" or on %s" % PHONE) if PHONE else "",
-                       "date": __import__("datetime").date.today().strftime("%-d %B %Y")}
+                       "date": "%s %s %s" % (_today().day, _today().strftime("%B"), _today().year)}
     page("privacy/index.html", "Privacy Policy | %s" % SITE,
          "How %s Ltd handles the information you send us when you enquire about bus or coach hire." % SITE,
          body)

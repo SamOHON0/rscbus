@@ -110,9 +110,19 @@ Brand navy from the logo is `#0f2532` (`--navy-deep` in style.css).
 
 ## Enquiry form
 
-`assets/site.js` composes a `mailto:` to `office@rscbuses.ie` from the form
-fields. No backend, nothing to host. If a real endpoint is wanted later,
-POST to it from the same submit handler.
+Posts to Formspree. `assets/site.js` submits over AJAX so the customer stays
+on the page; the `action`/`method` on the form is the no-JS fallback. A failed
+post falls back to a `mailto:` link so the enquiry is never silently dropped.
+`_gotcha` is a honeypot, hidden by `.hp` in `assets/style.css`.
+
+**The form is dead until the Formspree ID is swapped in.** `contact/index.html`
+still reads `action="https://formspree.io/f/[FORM-ID]"`. Create the form in the
+SquareTwo Formspree account with `office@rscbuses.ie` as the recipient, then
+replace `[FORM-ID]`. Send one test enquiry and confirm it lands in Sorica's
+inbox and that Reply goes back to the customer, not to Formspree.
+
+Formspree is now named as a processor in `privacy/index.html` (What we collect,
+and Third parties). If the form provider ever changes, that page changes too.
 
 `/contact/?service=<slug>` pre-selects the service dropdown — the service
 cards across the site link in that way.
